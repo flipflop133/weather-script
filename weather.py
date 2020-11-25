@@ -11,7 +11,7 @@ def get_weather():
     """
     try:
         # retrieve data from json file
-        with open("weather_settings.json", "r") as read_file:
+        with open("{}/weather_settings.json".format(os.path.dirname(os.path.realpath(__file__))), "r") as read_file:
             data = json.load(read_file)
         url = data['url']
         key = data['key']
