@@ -7,6 +7,13 @@ import os
 error_time = 0
 
 
+def error_handling():
+    global error_time
+    time.sleep(error_time)
+    error_time += 10
+    get_weather()
+
+
 def get_weather():
     """Retrieve current weather from weatherapi.com
     """
@@ -36,16 +43,14 @@ def get_weather():
         # display weather
         print("{}  {}{}".format(icon, int(temp), unit))
     except OSError:
+        # no internet connentions
+        error_handling()
         print("weather_settings.json file not found")
     except json.JSONDecodeError:
         print("error in weather_settings.json file")
     except Exception as e:
         print(e)
-        global error_time
-        time.sleep(error_time)
-        error_time += 10
-        print(error_time)
-        get_weather()
+        error_handling()
 
 
 def get_icon(conditions, daytime):
