@@ -1,0 +1,8 @@
+{
+    "url": "http://api.weatherapi.com/v1/current.json",
+    "key": "your api key",
+    "parameters": "weatherapi parameters",
+    "unit": "unit",
+    "sunset": 00,
+    "sunrise": 00
+}
