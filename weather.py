@@ -31,10 +31,16 @@ def get_weather():
 
         # display weather
         print("{} {}{}".format(icon, temp, unit))
+    except OSError:
+        print("weather_settings.json file not found")
+    except json.JSONDecodeError:
+        print("error in weather_settings.json file")
     except Exception as e:
         print(e)
+        global error_time
         time.sleep(error_time)
-        error_time + 10
+        error_time += 10
+        print(error_time)
         get_weather()
 
 
