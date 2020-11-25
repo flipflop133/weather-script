@@ -45,7 +45,6 @@ def get_weather():
     except OSError:
         # no internet connentions
         error_handling()
-        print("weather_settings.json file not found")
     except json.JSONDecodeError:
         print("error in weather_settings.json file")
     except Exception as e:
