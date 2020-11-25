@@ -42,9 +42,8 @@ def get_weather():
 
         # display weather
         print("{}  {}{}".format(icon, int(temp), unit))
-    except OSError:
-        # no internet connentions
-        error_handling()
+    except requests.ConnectionError:
+        print("no internet")
     except json.JSONDecodeError:
         print("error in weather_settings.json file")
     except Exception as e:
@@ -56,7 +55,13 @@ def get_icon(conditions, daytime):
     """ Determine weather icon in function of the current weather conditions
     and hour.
     """
-    icon = ''
+    # retrieve data from json file
+    with open(
+            "{}/weather_icons.json".format(
+                os.path.dirname(os.path.realpath(__file__))),
+            "r") as read_file:
+        data = json.load(read_file)
+    # determine day or night
     hour = subprocess.run(['date', '+%H'],
                           check=True,
                           stdout=subprocess.PIPE,
@@ -64,34 +69,18 @@ def get_icon(conditions, daytime):
     hour = (hour.stdout).strip()
     sunset = daytime['sunset']
     sunrise = daytime['sunrise']
-    # night icons
-    if int(hour) > sunset or int(hour) < sunrise:
-        if "cloud" in conditions:
-            icon = ''
-        elif "sun" in conditions:
-            icon = ''
-        elif "rain" in conditions:
-            icon = ''
-        elif "clear" in conditions:
-            icon = ''
-        else:
-            icon = ''
-    # day icons
-    else:
-        if "partly cloudy" in conditions:
-            icon = ''
-        elif "cloud" in conditions:
-            icon = ''
-        elif "sun" in conditions:
-            icon = ''
-        elif "rain" in conditions:
-            icon = ''
-        elif "clear" in conditions:
-            icon = ''
-        elif "fair" in conditions:
-            icon = ''
-        else:
-            icon = ''
+
+    # get icon
+    icon = ''
+    for item in data:
+        if item["day"] == conditions or item["night"] == conditions:
+            # night icon
+            if int(hour) > sunset or int(hour) < sunrise:
+                icon = item["icon"]
+            # day icon
+            else:
+                icon = item["icon-night"]
+
     return icon
 
 
