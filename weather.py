@@ -12,7 +12,10 @@ def get_weather():
     """
     try:
         # retrieve data from json file
-        with open("{}/weather_settings.json".format(os.path.dirname(os.path.realpath(__file__))), "r") as read_file:
+        with open(
+                "{}/weather_settings.json".format(
+                    os.path.dirname(os.path.realpath(__file__))),
+                "r") as read_file:
             data = json.load(read_file)
         url = data['url']
         key = data['key']
@@ -31,7 +34,7 @@ def get_weather():
         icon = get_icon(conditions, daytime)
 
         # display weather
-        print("{} {}{}".format(icon, temp, unit))
+        print("{}  {}{}".format(icon, int(temp), unit))
     except OSError:
         print("weather_settings.json file not found")
     except json.JSONDecodeError:
