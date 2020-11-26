@@ -10,6 +10,7 @@ The script simply displays an icon, the current weather and the unit.
 - `key`: Get your API key on [weatherapi.com](https://www.weatherapi.com/)
 - `parameters`: weatherapi parameters (see [here](https://www.weatherapi.com/) for more informations)
 - `unit`: celcius or farheinheit
+* Optional:
 - `sunset`: sunset time in 24 hours format
 - `sunrise`: sunrise time in 24 hours format
 

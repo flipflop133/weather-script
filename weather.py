@@ -6,6 +6,15 @@ import datetime
 
 error_time = 0
 
+data = 0
+
+
+def daytime_mode():
+    if "sunset" and "sunrise" in data:
+        return True
+    else:
+        return False
+
 
 def error_handling():
     global error_time
@@ -17,6 +26,7 @@ def error_handling():
 def get_weather():
     """Retrieve current weather from weatherapi.com
     """
+    global data
     try:
         # retrieve data from json file
         with open(
@@ -28,7 +38,8 @@ def get_weather():
         key = data['key']
         unit = "°C" if data['unit'] == "celcius" else "°F"
         parameters = data['parameters']
-        daytime = {'sunset': data['sunset'], 'sunrise': data['sunrise']}
+        if daytime_mode():
+            daytime = {'sunset': data['sunset'], 'sunrise': data['sunrise']}
 
         # retrieve weather from weatherapi.com
         request = "{}?key={}&q={}".format(url, key, parameters)
@@ -37,6 +48,8 @@ def get_weather():
         conditions = data['current']['condition']['text']
         temp = data['current']['temp_c'] if unit == "°C" else data['current']
         ['temp_f']
+        if not daytime_mode():
+            daytime = data['current']['is_day']
 
         # determine the icon
         icon = get_icon(conditions, daytime)
@@ -63,20 +76,28 @@ def get_icon(conditions, daytime):
             "r") as read_file:
         data = json.load(read_file)
     # determine day or night
-    hour = datetime.datetime.now().strftime("%H")
-    sunset = daytime['sunset']
-    sunrise = daytime['sunrise']
+    if daytime_mode():
+        hour = datetime.datetime.now().strftime("%H")
+        sunset = daytime['sunset']
+        sunrise = daytime['sunrise']
 
     # get icon
     icon = ''
     for item in data:
         if item["day"] == conditions or item["night"] == conditions:
             # night icon
-            if int(hour) > sunset or int(hour) < sunrise:
-                icon = item["icon"]
-            # day icon
+            if daytime_mode():
+                if int(hour) > sunset or int(hour) < sunrise:
+                    icon = item["icon"]
+                # day icon
+                else:
+                    icon = item["icon-night"]
             else:
-                icon = item["icon-night"]
+                if datetime:
+                    icon = item["icon"]
+                # day icon
+                else:
+                    icon = item["icon-night"]
 
     return icon
 
