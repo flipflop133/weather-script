@@ -55,7 +55,7 @@ def get_weather():
         icon = get_icon(conditions, daytime)
 
         # display weather
-        print("{} {}{}".format(icon, int(temp), unit))
+        print("{} {}{}".format(icon, int(round(temp)), unit))
     except requests.ConnectionError:
         error_handling()
     except json.JSONDecodeError:
