@@ -43,7 +43,7 @@ def get_weather():
         # display weather
         print("{} {}{}".format(icon, int(temp), unit))
     except requests.ConnectionError:
-        print("no internet")
+        error_handling()
     except json.JSONDecodeError:
         print("error in weather_settings.json file")
     except Exception as e:
