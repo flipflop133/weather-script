@@ -7,22 +7,21 @@ The script simply displays an icon, the current weather and the unit.
 
 ## How to use
  Clone the repository and configure json settings in weather_settings.json as follows:
-- `key`: Get your API key on [weatherapi.com](https://www.weatherapi.com/)
-- `parameters`: weatherapi parameters (see [here](https://www.weatherapi.com/) for more informations)
-- `unit`: celcius or farheinheit
-* Optional:
-- `sunset`: sunset time in 24 hours format
-- `sunrise`: sunrise time in 24 hours format
+- ### Required
+    - `key`: string (Get your API key on [weatherapi.com](https://www.weatherapi.com/), e.g:"c92jef" )
+    - `parameters`: string (weatherapi parameters (see "Request Parameters" section [here](https://www.weatherapi.com/docs/) for more informations), e.g: "Namen,Belgium")
+    - `unit`: string ("Celsius" or "Farhenheit")
+- ### Optional
+    - `sunset`: number (sunset time in 24 hours format, e.g: 22)
+    - `sunrise`: number (sunrise time in 24 hours format, e.g: 7)
 
 ### Example
 ``` json
 {
     "url": "http://api.weatherapi.com/v1/current.json",
-    "key": "your api key",
-    "parameters": "London",
-    "unit": "celcius",
-    "sunset": 22,
-    "sunrise": 7
+    "key": "c92jef",
+    "parameters": "Namen,Belgium",
+    "unit": "Celsius"
 }
 ```
 ### Use with Polybar

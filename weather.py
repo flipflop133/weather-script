@@ -36,7 +36,7 @@ def get_weather():
             data = json.load(read_file)
         url = data['url']
         key = data['key']
-        unit = "°C" if data['unit'] == "celcius" else "°F"
+        unit = "°C" if data['unit'] == "Celsius" else "°F"
         parameters = data['parameters']
         if daytime_mode():
             daytime = {'sunset': data['sunset'], 'sunrise': data['sunrise']}
