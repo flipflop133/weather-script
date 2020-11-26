@@ -35,7 +35,8 @@ def get_weather():
         response = requests.get(request)
         data = json.loads(response.content)
         conditions = data['current']['condition']['text']
-        temp = data['current']['temp_c']
+        temp = data['current']['temp_c'] if unit == "°C" else data['current']
+        ['temp_f']
 
         # determine the icon
         icon = get_icon(conditions, daytime)
