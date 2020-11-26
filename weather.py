@@ -41,7 +41,7 @@ def get_weather():
         icon = get_icon(conditions, daytime)
 
         # display weather
-        print("{}  {}{}".format(icon, int(temp), unit))
+        print("{} {}{}".format(icon, int(temp), unit))
     except requests.ConnectionError:
         print("no internet")
     except json.JSONDecodeError:
