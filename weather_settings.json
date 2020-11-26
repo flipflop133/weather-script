@@ -1,6 +1,16 @@
 {
     "url": "http://api.weatherapi.com/v1/current.json",
+    "url_forecast": "http://api.weatherapi.com/v1/forecast.json",
     "key": "c92jef",
     "parameters": "Namen,Belgium",
-    "unit": "Celsius"
+    "unit": "Celsius",
+    "alternative":{
+        "location":{
+            "name": true,
+            "country": true
+        },
+        "current":{
+
+        }
+    }
 }
