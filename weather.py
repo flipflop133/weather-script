@@ -1,8 +1,8 @@
-import subprocess
 import json
 import requests
 import time
 import os
+import datetime
 
 error_time = 0
 
@@ -63,11 +63,7 @@ def get_icon(conditions, daytime):
             "r") as read_file:
         data = json.load(read_file)
     # determine day or night
-    hour = subprocess.run(['date', '+%H'],
-                          check=True,
-                          stdout=subprocess.PIPE,
-                          universal_newlines=True)
-    hour = (hour.stdout).strip()
+    hour = datetime.datetime.now().strftime("%H")
     sunset = daytime['sunset']
     sunrise = daytime['sunrise']
 
