@@ -15,6 +15,13 @@ The script simply displays an icon, the current weather and the unit.
     - `sunset`: number (sunset time in 24 hours format, e.g: 22)
     - `sunrise`: number (sunrise time in 24 hours format, e.g: 7)
 
+### Launch options
+- `-a`: boolean: alternative: display weather forecast.
+    - python $HOME/.config/weather-script/weather.py -a True
+
+- `-s`: integer: space: define number of space between the temperature and the icon (default is 1).
+    - python $HOME/.config/weather-script/weather.py -s 2
+
 ### Example
 ``` json
 {
@@ -29,5 +36,6 @@ The script simply displays an icon, the current weather and the unit.
 [module/weather]
 type = custom/script
 interval = 1800
-exec = python /path/to/weather/script
+exec = python /path/to/weather/script -s 2
+click-left = python /path/to/weather/script -a True
 ```
