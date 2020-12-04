@@ -22,11 +22,11 @@ if args.space is not None:
 
 error_time = 0
 
-data = 0
+json_data = 0
 
 
 def daytime_mode():
-    if "sunset" and "sunrise" in data:
+    if "sunset" and "sunrise" in json_data:
         return True
     else:
         return False
@@ -42,7 +42,7 @@ def error_handling():
 def get_weather(alternative):
     """Retrieve current weather from weatherapi.com
     """
-    global data
+    global json_data
 
     # retrieve data from json file
     with open(
@@ -81,7 +81,10 @@ def get_weather(alternative):
     else:
         unit = "°C" if json_data['unit'] == "Celsius" else "°F"
         if daytime_mode():
-            daytime = {'sunset': data['sunset'], 'sunrise': data['sunrise']}
+            daytime = {
+                'sunset': json_data['sunset'],
+                'sunrise': json_data['sunrise']
+            }
         conditions = data['current']['condition']['text']
         temp = data['current']['temp_c'] if unit == "°C" else data['current']
         ['temp_f']
@@ -92,8 +95,7 @@ def get_weather(alternative):
         icon = get_icon(conditions, daytime)
 
         # display weather
-        print("{}{}{}{}".format(icon, ' ' * space, int(round(temp)), unit),
-              end='')
+        print("{}{}{}{}".format(icon, ' ' * space, int(round(temp)), unit))
 
     try:
         pass
@@ -126,17 +128,18 @@ def get_icon(conditions, daytime):
     icon = ''
     for item in data:
         if item["day"] == conditions or item["night"] == conditions:
-            # night icon
             if daytime_mode():
+                # night icon
                 if int(hour) > sunset or int(hour) < sunrise:
-                    icon = item["icon"]
+                    icon = item["icon-night"]
                 # day icon
                 else:
-                    icon = item["icon-night"]
+                    icon = item["icon"]
             else:
+                # day icon
                 if daytime:
                     icon = item["icon"]
-                # day icon
+                # night icon
                 else:
                     icon = item["icon-night"]
 
