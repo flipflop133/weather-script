@@ -1,4 +1,4 @@
-from datetime import date
+import datetime
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -11,7 +11,7 @@ class WeatherWindow(Gtk.Window):
     afternoon_grid = Gtk.Grid(orientation=Gtk.Orientation.VERTICAL)
     afternoon_grid_child = Gtk.Grid()
 
-    def __init__(self):
+    def __init__(self, forecast):
         Gtk.Window.__init__(self, title="Weather Forecast")
         self.main_grid.add(self.morning_grid)
         self.main_grid.add(self.afternoon_grid)
@@ -46,14 +46,20 @@ class WeatherWindow(Gtk.Window):
             vbox_infos.add(vbox_infos_icon)
             vbox_infos.add(vbox_infos_temp)
             if i == 0:
-                today = date.today()
+                self._forecast = forecast
+                location = forecast["location"]["name"]
+                location_name = Gtk.Label()
+                location_name.set_markup(
+                    "<span size='18000'>\n{}</span>".format(location))
+                today = datetime.date.today()
                 app_title = Gtk.Label()
                 app_title.set_markup(
-                    "<span size='18000'>\n{} Forecast\n</span>".format(
+                    "<span size='18000'>{} Forecast\n</span>".format(
                         today.strftime("%B %d, %Y")))
                 title = Gtk.Label()
                 title.set_markup(
                     "<span size='16000'>Morning Forecast\n</span>")
+                self.morning_grid.add(location_name)
                 self.morning_grid.add(app_title)
                 self.morning_grid.add(title)
                 self.morning_grid_child.add(vbox_infos)
@@ -65,18 +71,32 @@ class WeatherWindow(Gtk.Window):
                 self.afternoon_grid_child.add(vbox_infos)
 
     def display(self, forecast, hour, icon, temp):
-
+        current_hour = datetime.datetime.now()
+        if hour == current_hour.hour:
+            print("sameee")
+            color = "cyan"
+        else:
+            color = "black"
+        # hour
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        label = Gtk.Label(label="{}h".format(str(hour + 1)))
+        label = Gtk.Label()
+        label.set_markup("<span foreground=\"{}\">{}</span>".format(
+            color, str(hour + 1)))
         vbox.pack_start(label, True, True, 0)
 
+        # icon
         vbox_icon = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        label = Gtk.Label(label="{}".format(icon))
-        label.set_markup("<span size='24000'>{}</span>".format(icon))
+        label = Gtk.Label()
+        label.set_markup(
+            "<span size='24000' foreground=\"{}\">{}</span>".format(
+                color, icon))
         vbox_icon.pack_start(label, True, True, 0)
 
+        # temp
         vbox_temp = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        label = Gtk.Label(label="{}".format(str(temp)))
+        label = Gtk.Label()
+        label.set_markup("<span foreground=\"{}\">{}</span>".format(
+            color, str(temp)))
         vbox_temp.pack_start(label, True, True, 0)
 
         vbox_final = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)

@@ -147,7 +147,7 @@ def get_icon(conditions, daytime):
 
 
 def weather_app(forecast):
-    window = WeatherWindow()
+    window = WeatherWindow(forecast)
     for hour in range(0, 24):
         icon = get_icon(
             forecast["forecast"]["forecastday"][0]["hour"][hour]["condition"]
