@@ -30,5 +30,12 @@ The script simply displays an icon, the current weather and the unit.
 [module/weather]
 type = custom/script
 interval = 1800
-exec = python -O /path/to/weather/script
+exec = python -O /path/to/weather/script/weather.py
+```
+### Use with Waybar
+``` ini
+"custom/weather": {
+	"interval": 600,
+	"exec": "python -O /path/to/weather/script/weather.py"
+}
 ```
