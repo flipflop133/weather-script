@@ -16,6 +16,13 @@ def daytime_mode():
         return False
 
 
+def iconPosition():
+    if "icon-position" in data:
+        return data["icon-position"]
+    else:
+        return "right"
+
+
 def error_handling():
     global error_time
     time.sleep(error_time)
@@ -38,6 +45,7 @@ def get_weather():
         key = data['key']
         unit = "°C" if data['unit'] == "Celsius" else "°F"
         parameters = data['parameters']
+        iconPos = iconPosition()
         if daytime_mode():
             daytime = {'sunset': data['sunset'], 'sunrise': data['sunrise']}
 
@@ -55,7 +63,10 @@ def get_weather():
         icon = get_icon(conditions, daytime)
 
         # display weather
-        print("{} {}{}".format(icon, int(round(temp)), unit))
+        if (iconPos == "left"):
+            print("{} {}{}".format(icon, int(round(temp)), unit))
+        else:
+            print("{}{} {} ".format(int(round(temp)), unit, icon))
     except requests.ConnectionError:
         error_handling()
     except json.JSONDecodeError:

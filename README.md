@@ -14,6 +14,7 @@ The script simply displays an icon, the current weather and the unit.
 - ### Optional
     - `sunset`: number (sunset time in 24 hours format, e.g: 22)
     - `sunrise`: number (sunrise time in 24 hours format, e.g: 7)
+    - `icon-position`: string ("left" or "right")
 
 ### Example
 ``` json
@@ -29,5 +30,5 @@ The script simply displays an icon, the current weather and the unit.
 [module/weather]
 type = custom/script
 interval = 1800
-exec = python /path/to/weather/script
+exec = python -O /path/to/weather/script
 ```
