@@ -41,7 +41,7 @@ def get_weather():
                     os.path.dirname(os.path.realpath(__file__))),
                 "r") as read_file:
             data = json.load(read_file)
-        url = data['url']
+        url = "http://api.weatherapi.com/v1/current.json"
         key = data['key']
         unit = "°C" if data['unit'] == "Celsius" else "°F"
         parameters = data['parameters']
